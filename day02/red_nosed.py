@@ -20,6 +20,10 @@ def test_descending(report):
             return 0
     return 1
 
+def remove_one(report):
+    for i in range(len(report)):
+        yield [report[j] for j in range(len(report)) if j != i]
+
 def main():
     # parse the input
     reports = []
@@ -29,4 +33,16 @@ def main():
                    
     print('Part 1:', sum([test_report(r) for r in reports]))
 
+    cnt2 = 0
+    for report in reports:
+        if test_report(report):
+            cnt2 += 1
+        else:
+            for r in remove_one(report):
+                if test_report(r):
+                    cnt2 += 1
+                    break
+
+    print('Part 2:', cnt2)
+        
 main()
