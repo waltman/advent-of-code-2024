@@ -26,10 +26,8 @@ def remove_one(report):
 
 def main():
     # parse the input
-    reports = []
     with open(sys.argv[1]) as f:
-        for line in f:
-            reports.append([int(x) for x in line.rstrip().split(' ')])
+        reports = [[int(x) for x in line.rstrip().split(' ')] for line in f]
                    
     print('Part 1:', sum([test_report(r) for r in reports]))
 
