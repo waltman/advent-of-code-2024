@@ -9,11 +9,7 @@ def main():
     with open(sys.argv[1]) as f:
         lines = [line.rstrip() for line in f]
 
-    part1 = 0
-    for line in lines:
-        valids = re.findall(r'mul\(\d{1,3},\d{1,3}\)', line)
-        part1 += sum([parse(tok) for tok in valids])
-
+    part1 = sum([sum([parse(tok) for tok in re.findall(r'mul\(\d{1,3},\d{1,3}\)', line)]) for line in lines])
     print('Part 1:', part1)
 
     part2 = 0
