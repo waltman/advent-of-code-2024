@@ -1,8 +1,8 @@
 import sys
-from itertools import pairwise
 
 def main():
     part1 = 0
+    part2 = 0
     in_rules = True
     rules = set()
 
@@ -16,14 +16,20 @@ def main():
                 rules.add((before, after))
             else: # in reports, so check it
                 pages = [int(x) for x in line.split(',')]
+                fixed = pages.copy()
                 ok = True
-                for i, j in pairwise(pages):
-                    if (j, i) in rules:
-                        ok = False
-                        break
+                for i in range(len(pages)-1):
+                    for j in range(i+1, len(pages)):
+                        if (pages[j], pages[i]) in rules:
+                            ok = False
+                            pages[i], pages[j] = pages[j], pages[i]
+
                 if ok:
                     part1 += pages[len(pages)//2]
+                else:
+                    part2 += pages[len(pages)//2]
 
     print('Part 1:', part1)
+    print('Part 2:', part2)
 
 main()
