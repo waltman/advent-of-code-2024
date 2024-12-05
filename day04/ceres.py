@@ -35,4 +35,14 @@ def main():
 
     print('Part1:', cnt1)
     
+    valid2 = {'MAS', 'SAM'}
+    cnt2 = 0
+    for row, col in product(range(nrows-2), range(ncols-2)):
+        diag1 = grid[row,col] + grid[row+1,col+1] + grid[row+2,col+2]
+        diag2 = grid[row+2,col] + grid[row+1,col+1] + grid[row,col+2]
+        if diag1 in valid2 and diag2 in valid2:
+            cnt2 += 1
+        
+    print('Part2:', cnt2)
+
 main()
