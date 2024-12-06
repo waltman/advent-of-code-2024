@@ -16,7 +16,6 @@ def main():
                 rules.add((before, after))
             else: # in reports, so check it
                 pages = [int(x) for x in line.split(',')]
-                fixed = pages.copy()
                 ok = True
                 for i in range(len(pages)-1):
                     for j in range(i+1, len(pages)):
