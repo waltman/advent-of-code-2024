@@ -8,6 +8,8 @@ def evaluate(eqn, func):
         res = func[ops[0]](values[0],values[1])
         for i in range(1, len(ops)):
             res = func[ops[i]](res, values[i+1])
+            if res > target:
+                break
         if res == target:
             return res
     return 0
