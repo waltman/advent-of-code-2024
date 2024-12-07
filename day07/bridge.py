@@ -5,8 +5,8 @@ def evaluate(eqn, func):
     target = eqn[0]
     values = eqn[1]
     for ops in product(func.keys(), repeat = len(values) - 1):
-        res = func[ops[0]](values[0],values[1])
-        for i in range(1, len(ops)):
+        res = values[0]
+        for i in range(len(ops)):
             res = func[ops[i]](res, values[i+1])
             if res > target:
                 break
