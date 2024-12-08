@@ -32,4 +32,33 @@ def main():
 
     print('Part 1:', len(antinodes))
     
+    # now do the same thing for part 2 but extending the effect
+    antinodes2 = set()
+    for k in antennas.keys():
+        for pair in combinations(antennas[k], 2):
+            delta = pair[1] - pair[0]
+            # backwards
+            a1 = pair[0].copy()
+            while True:
+                a1 -= delta
+                if in_grid(a1, nrows, ncols):
+                    antinodes2.add(tuple(a1))
+                else:
+                    break
+            # forwards
+            a2 = pair[1].copy()
+            while True:
+                a2 += delta
+                if in_grid(a2, nrows, ncols):
+                    antinodes2.add(tuple(a2))
+                else:
+                    break
+
+        # also add all the antenna poitns unless it's the only one
+        if len(antennas[k]) > 1:
+            for point in antennas[k]:
+                antinodes2.add(tuple(point))
+                
+    print('Part 2:', len(antinodes2))
+
 main()
