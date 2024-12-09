@@ -8,12 +8,10 @@ def parse_disk_map(line):
     for i in range(len(disk_map)):
         if i % 2 == 0:
             stats.append((len(blocks), disk_map[i]))
-            for j in range(disk_map[i]):
-                blocks.append(fid)
+            blocks += [fid] * disk_map[i]
             fid += 1
         else:
-            for j in range(disk_map[i]):
-                blocks.append('.')
+            blocks += ['.'] * disk_map[i]
 
     return blocks, stats
 
@@ -45,9 +43,8 @@ def frag2(blocks, stats):
     for fid in range(len(stats)-1, -1, -1):
         position, size = stats[fid]
         if (i := free_block(blocks, position, size)) >= 0:
-            for j in range(size):
-                blocks[i+j] = fid
-                blocks[position+j] = '.'
+            blocks[i:i+size] = [fid] * size
+            blocks[position:position+size] = ['.'] * size
 
 def checksum(blocks):
     chk = 0
