@@ -31,7 +31,7 @@ def frag(blocks):
         j -= 1
 
 def free_block(blocks, position, size):
-    for i in range(len(blocks)-size):
+    for i in range(position-1):
         ok = True
         for j in range(i, i+size):
             if blocks[j] != '.':
