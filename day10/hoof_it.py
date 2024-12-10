@@ -46,12 +46,9 @@ def rating(grid, position):
                     queue.append((height+1, r, c))
     return len(peaks)
 
-def fix(c):
-    return -1 if c == '.' else int(c)
-
 def main():
     with open(sys.argv[1]) as f:
-        grid = np.array([[fix(c) for c in line.rstrip()] for line in f])
+        grid = np.array([list(map(lambda c: -1 if c == '.' else int(c), line.rstrip())) for line in f])
     nrows, ncols = grid.shape
 
     trailheads = [(row, col) for row,col in product(range(nrows), range(ncols)) if grid[row,col] == 0]
