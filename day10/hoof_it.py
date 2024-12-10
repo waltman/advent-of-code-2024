@@ -46,15 +46,13 @@ def rating(grid, position):
                     queue.append((height+1, r, c))
     return len(peaks)
 
+def fix(c):
+    return -1 if c == '.' else int(c)
+
 def main():
     with open(sys.argv[1]) as f:
-        tmp_grid = np.array([[c for c in line.rstrip()] for line in f])
-
-    # All this just to handle the .'s in the test examples!
-    grid = np.ndarray(tmp_grid.shape, dtype=int)
+        grid = np.array([[fix(c) for c in line.rstrip()] for line in f])
     nrows, ncols = grid.shape
-    for row,col in product(range(nrows), range(ncols)):
-        grid[row,col] = -1 if tmp_grid[row,col] == '.' else int(tmp_grid[row,col])
 
     trailheads = [(row, col) for row,col in product(range(nrows), range(ncols)) if grid[row,col] == 0]
     print('Part 1:', sum([score(grid, th) for th in trailheads]))
