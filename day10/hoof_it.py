@@ -32,6 +32,20 @@ def score(grid, position):
                     queue.append((height+1, r, c))
     return len(peaks)
 
+def rating(grid, position):
+    peaks = []
+    queue = deque()
+    queue.append((0, position[0], position[1]))
+    while queue:
+        height, row, col = queue.popleft()
+        if height == 9:
+            peaks.append((row, col))
+        else:
+            for r, c in neighbors(grid, row, col):
+                if grid[r,c] == height+1:
+                    queue.append((height+1, r, c))
+    return len(peaks)
+
 def main():
     with open(sys.argv[1]) as f:
         tmp_grid = np.array([[c for c in line.rstrip()] for line in f])
@@ -42,11 +56,9 @@ def main():
     for row,col in product(range(nrows), range(ncols)):
         grid[row,col] = -1 if tmp_grid[row,col] == '.' else int(tmp_grid[row,col])
 
-    print(grid)
-
     trailheads = [(row, col) for row,col in product(range(nrows), range(ncols)) if grid[row,col] == 0]
-    print(trailheads)
     print('Part 1:', sum([score(grid, th) for th in trailheads]))
+    print('Part 2:', sum([rating(grid, th) for th in trailheads]))
 
 main()
 
