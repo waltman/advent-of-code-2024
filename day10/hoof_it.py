@@ -19,32 +19,20 @@ def neighbors(grid, row, col):
             yield(r, c)
 
 def score(grid, position):
-    peaks = set()
+    unique_peaks = set()
+    all_peaks = []
     queue = deque()
     queue.append((0, position[0], position[1]))
     while queue:
         height, row, col = queue.popleft()
         if height == 9:
-            peaks.add((row, col))
+            unique_peaks.add((row, col))
+            all_peaks.append((row, col))
         else:
             for r, c in neighbors(grid, row, col):
                 if grid[r,c] == height+1:
                     queue.append((height+1, r, c))
-    return len(peaks)
-
-def rating(grid, position):
-    peaks = []
-    queue = deque()
-    queue.append((0, position[0], position[1]))
-    while queue:
-        height, row, col = queue.popleft()
-        if height == 9:
-            peaks.append((row, col))
-        else:
-            for r, c in neighbors(grid, row, col):
-                if grid[r,c] == height+1:
-                    queue.append((height+1, r, c))
-    return len(peaks)
+    return np.array([len(unique_peaks), len(all_peaks)])
 
 def main():
     with open(sys.argv[1]) as f:
@@ -52,8 +40,7 @@ def main():
     nrows, ncols = grid.shape
 
     trailheads = [(row, col) for row,col in product(range(nrows), range(ncols)) if grid[row,col] == 0]
-    print('Part 1:', sum([score(grid, th) for th in trailheads]))
-    print('Part 2:', sum([rating(grid, th) for th in trailheads]))
+    print('Parts 1 and 2:', sum([score(grid, th) for th in trailheads]))
 
 main()
 
