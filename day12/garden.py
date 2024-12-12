@@ -16,17 +16,13 @@ def make_graph(grid):
     for r in range(nrows):
         for c in range(ncols-1):
             if grid[r,c] == grid[r,c+1]:
-#                print(f'{grid[r,c]} ({r,c}) => ({r,c+1})')
                 G.add_edge((r,c), (r,c+1))
-#                print(f'across edge from ({r},{c}) ({r},{c+1}) {grid[r,c]}')
 
     # cols:
     for c in range(ncols):
         for r in range(nrows-1):
             if grid[r,c] == grid[r+1,c]:
-#                print(f'{grid[r,c]} ({r,c}) => ({r+1},{c})')
                 G.add_edge((r,c), (r+1,c))
-#                print(f'down edge from ({r},{c}) ({r+1},{c}) {grid[r,c]}')
 
     return G
 
@@ -67,8 +63,6 @@ def main():
         grid = np.array([[c for c in line.rstrip()] for line in f])
 
     G = make_graph(grid)
-    print(G)
-    print(nx.number_connected_components(G), 'connected components')
     for cc in nx.connected_components(G):
         print(cc)
         print(len(cc), perimeter(grid, cc))
