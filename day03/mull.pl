@@ -1,6 +1,5 @@
 #!/usr/bin/env perl
 use v5.40;
-use List::Util qw(sum);
 
 sub parse($tok) {
     $tok =~ /mul\((\d{1,3}),(\d{1,3})\)/;
