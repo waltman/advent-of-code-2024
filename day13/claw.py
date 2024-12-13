@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import re
+import math
 
 class Machine:
     def __init__(self, ax, ay, bx, by, px, py):
@@ -31,14 +32,22 @@ class Machine:
                     break
 
         return best_tok if best_tok < 1e300 else 0
-        # if best_tok < 1e300:
-        #     print(f'best at ({best_i}, {best_j}) for {best_tok} tokens')
-        # else:
-        #     print("can't win")
-        
+
+    def play2(self, limit=100, fudge=0):
+        a = np.array([[self.a[0], self.b[0]], [self.a[1], self.b[1]]])
+
+        x = np.linalg.solve(a, self.p + fudge)
+        if np.all(x <= limit) and is_int(x):
+            return int(round((x[0] * 3 + x[1])))
+        else:
+            return 0
 
     def __repr__(self):
         return f'{self.a=}, {self.b=}, {self.p=}'
+
+def is_int(arr):
+    eps = 1e-4
+    return abs(round(arr[0]) - arr[0]) < eps and abs(round(arr[1]) - arr[1]) < eps
 
 def main():
     # parse the input
@@ -66,11 +75,7 @@ def main():
                 machines.append(Machine(ax, ay, bx, by, px, py))
                 state = 'a'
 
-    print('Part 1:', sum([machine.play() for machine in machines]))
-
-    # for machine in machines:
-    #     print(machine)
-    #     machine.play()
-        
+    print('Part 1:', sum([machine.play2() for machine in machines]))
+    print('Part 2:', sum([machine.play2(1e300, 10000000000000) for machine in machines]))
 
 main()
