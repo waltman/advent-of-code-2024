@@ -39,11 +39,12 @@ def main():
     stack = []
     seen = {start_tile}
     stack.append((start_tile[0], start_tile[1], '>', seen, 0));
+    best_tiles = set()
     while stack:
         row, col, direct, seen, score = stack.pop()
         if score > best:
             continue
-        if score >= best_at[row, col]:
+        if score > best_at[row, col]:
             continue
         else:
             best_at[row,col] = score
@@ -51,6 +52,9 @@ def main():
             if score < best:
                 print('new best of', score)
                 best = score
+                best_tiles = seen
+            elif score == best:
+                best_tiles |= seen
         else:
             d = delta[direct]
             if grid[row+d[0], col+d[1]] == '.':
@@ -62,5 +66,10 @@ def main():
                     stack.append((row2, col2, direct2, seen | {(row2, col2)}, score+1001))
 
     print('Part 1:', best)
+    print('Part 2:', len(best_tiles))
+    print(sorted(best_tiles))
+    print(best_at[(9,1)])
+    print(best_at[(9,2)])
+    print(best_at[(10,1)])
 
 main()
