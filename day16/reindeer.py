@@ -67,9 +67,5 @@ def main():
 
     print('Part 1:', best)
     print('Part 2:', len(best_tiles))
-    print(sorted(best_tiles))
-    print(best_at[(9,1)])
-    print(best_at[(9,2)])
-    print(best_at[(10,1)])
 
 main()
