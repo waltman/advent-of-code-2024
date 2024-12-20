@@ -1,5 +1,8 @@
 import sys
 from collections import defaultdict
+from functools import cache
+
+all_patterns = []
 
 def possible(design, patterns):
     stack = [design]
@@ -12,19 +15,20 @@ def possible(design, patterns):
                 stack.append(dsn[len(pattern):])
     return False
     
-def possible_cnt(design, patterns):
-    stack = [design]
-    cnt = 0
-    while stack:
-        dsn = stack.pop()
-        for pattern in patterns[dsn[0]]:
-            if pattern == dsn:
-                cnt += 1
-                print('cnt =', cnt)
-            elif dsn.startswith(pattern):
-                stack.append(dsn[len(pattern):])
-    return cnt
-    
+@cache
+def possible_cnt(design):
+#    print(f'{design=}')
+    subpatterns = []
+    flag = 0
+    for pattern in all_patterns:
+        if pattern == design:
+            flag = 1
+        elif design.startswith(pattern):
+            subpatterns.append(pattern)
+#    print(f'{subpatterns=}')
+    res = flag + sum([possible_cnt(design[len(subpat):]) for subpat in subpatterns])
+#    print(f'{design=} {res=}')
+    return res
 
 def main():
     patterns = defaultdict(list)
@@ -35,6 +39,7 @@ def main():
             if ',' in line:
                 for pattern in line.split(', '):
                     patterns[pattern[0]].append(pattern)
+                    all_patterns.append(pattern)
             elif line:
                 designs.append(line)
 
@@ -48,7 +53,9 @@ def main():
     cnt = 0
     for i in range(len(designs)):
         print(f'testing design {i}: {designs[i]}')
-        cnt += possible_cnt(designs[i], patterns)
+        tmp = possible_cnt(designs[i])
+        print('cnt =', tmp)
+        cnt += tmp
     print('Part 2:', cnt)
 
 main()
