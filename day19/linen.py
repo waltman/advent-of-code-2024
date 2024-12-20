@@ -17,7 +17,6 @@ def possible(design, patterns):
     
 @cache
 def possible_cnt(design):
-#    print(f'{design=}')
     subpatterns = []
     flag = 0
     for pattern in all_patterns:
@@ -25,10 +24,7 @@ def possible_cnt(design):
             flag = 1
         elif design.startswith(pattern):
             subpatterns.append(pattern)
-#    print(f'{subpatterns=}')
-    res = flag + sum([possible_cnt(design[len(subpat):]) for subpat in subpatterns])
-#    print(f'{design=} {res=}')
-    return res
+    return flag + sum([possible_cnt(design[len(subpat):]) for subpat in subpatterns])
 
 def main():
     patterns = defaultdict(list)
@@ -45,16 +41,13 @@ def main():
 
     cnt = 0
     for i in range(len(designs)):
-#        print(f'testing design {i}: {designs[i]}')
         if possible(designs[i], patterns):
             cnt += 1
     print('Part 1:', cnt)
 
     cnt = 0
     for i in range(len(designs)):
-        print(f'testing design {i}: {designs[i]}')
         tmp = possible_cnt(designs[i])
-        print('cnt =', tmp)
         cnt += tmp
     print('Part 2:', cnt)
 
