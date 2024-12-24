@@ -61,21 +61,16 @@ def main():
     set1 = {'z23','y23', 'x23', 'hpw', 'cgq', 'qdg'}
     rules1 = [i for i in range(len(rules)) if len(set1 & set(rules[i][0:3])) > 0]
     for perm1 in permutations(rules1, 4):
-        print(perm1)
-        # for perm1 in permutations(comb1, 2)
-        # for comb2 in combinations(rules2, 2):
-        #     for comb3 in combinations(rules3, 2):
-        #         for comb4 in combinations(rules4, 2):
-        #             new_wires = wires_start.copy()
-        #             new_rules = rules.copy()
-        #             new_rules[comb1[0]][2], new_rules[comb1[1]][2] = new_rules[comb1[1]][2], new_rules[comb1[0]][2]
-        #             new_rules[comb2[0]][2], new_rules[comb2[1]][2] = new_rules[comb2[1]][2], new_rules[comb2[0]][2]
-        #             new_rules[comb3[0]][2], new_rules[comb3[1]][2] = new_rules[comb3[1]][2], new_rules[comb3[0]][2]
-        #             new_rules[comb4[0]][2], new_rules[comb4[1]][2] = new_rules[comb4[1]][2], new_rules[comb4[0]][2]
-        #             evaluate(new_wires, new_rules)
-        #             zdec = bin2dec(new_wires, 'z')
-        #             if zdec == target:
-        #                 print('found one!', comb1, comb2, comb3, comb4)
+        new_wires = wires_start.copy()
+        new_rules = rules.copy()
+        new_rules[perm1[0]][2], new_rules[perm1[1]][2] = new_rules[perm1[1]][2], new_rules[perm1[0]][2]
+        new_rules[perm2[0]][2], new_rules[perm2[1]][2] = new_rules[perm2[1]][2], new_rules[perm2[0]][2]
+        new_rules[perm3[0]][2], new_rules[perm3[1]][2] = new_rules[perm3[1]][2], new_rules[perm3[0]][2]
+        new_rules[perm4[0]][2], new_rules[perm4[1]][2] = new_rules[perm4[1]][2], new_rules[perm4[0]][2]
+        evaluate(new_wires, new_rules)
+        zdec = bin2dec(new_wires, 'z')
+        if zdec == target:
+            print('found one!', comb1, comb2, comb3, comb4)
     # for comb1 in combinations(rules1, 2):
     #     for comb2 in combinations(rules2, 2):
     #         for comb3 in combinations(rules3, 2):
